@@ -1,0 +1,158 @@
+public class products extends javax.swing.JFrame {
+    public products() {
+        initComponents();
+        fetch();
+    }
+    
+    
+public void fetch()
+      {
+        try 
+        {
+    
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
+            String sql="select * from tbl_products";
+            System.out.println(sql);
+            Statement stmt=con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(rs);
+            DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
+            dl.setRowCount(0);
+            while(rs.next())
+            {
+                Vector v2=new Vector();
+               
+                v2.add(rs.getString("id"));
+                v2.add(rs.getString("item"));
+                
+                v2.add(rs.getString("price"));
+                v2.add(rs.getString("quantity"));
+              dl.addRow(v2);
+            }
+}
+            catch(Exception e)
+            {
+                    System.out.println("Error" + e);
+                    }         
+}  
+       
+       
+
+private void addbuttonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+         String item = txt_item.getText();
+        System.out.println(item);
+        String price = txt_price.getText();
+        System.out.println(price);
+        String quantity = txt_quantity.getText();
+        System.out.println(quantity); 
+        
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
+            String sql="insert into tbl_products(item,price,quantity)values('"+item+"','"+price+"','"+quantity+"')";
+            System.out.println(sql);
+            Statement stmt=con.createStatement();
+            int rs= stmt.executeUpdate(sql);
+                        System.out.println(rs);
+
+            if (rs==1)
+            {
+                JOptionPane.showMessageDialog(null,"Added successfully");
+               fetch();
+               clear();
+            }
+        }
+            catch(Exception e)
+    {
+        System.out.println("Error" + e);
+  }    
+}                                         
+
+
+
+private void updatebuttonActionPerformed(java.awt.event.ActionEvent evt) {    
+        DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
+        int index=tbl_product.getSelectedRow();
+        int id=Integer.parseInt(dl.getValueAt(index,0).toString());
+        String item= txt_item.getText();
+        System.out.println(item);
+        String price = txt_price.getText();
+        System.out.println(price);
+        String quantity = txt_quantity.getText();
+        System.out.println(quantity); 
+        
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
+            String sql="update tbl_products set item='"+item+"',price='"+price+"',quantity='"+quantity+"' where id='"+id+"'";
+            System.out.println(sql);
+            Statement stmt=con.createStatement();
+            int rs= stmt.executeUpdate(sql);
+            System.out.println(rs);
+            if(rs==1)
+            {
+                JOptionPane.showMessageDialog(this," SUCCESSFULLY Updated");
+                fetch();
+                clear();
+            }
+        }
+            catch(Exception e)
+    {
+        System.out.println("Error" + e);
+  }    
+}                                            
+
+
+
+private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {      
+        DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
+        int index=tbl_product.getSelectedRow();
+        int id=Integer.parseInt(dl.getValueAt(index,0).toString());
+        String item = txt_item.getText();
+        System.out.println(item);
+        String price = txt_price.getText();
+        System.out.println(price);
+        String quantity = txt_quantity.getText();
+        System.out.println(quantity); 
+        
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
+            String sql="delete from tbl_products where id='"+id+"'";
+            System.out.println(sql);
+            Statement stmt=con.createStatement();
+            int rs= stmt.executeUpdate(sql);
+            
+            if (rs==1)
+            {
+                JOptionPane.showMessageDialog(null,"deleted sussesfully");
+               fetch();
+               clear();
+            }
+        }
+            catch(Exception e)
+    {
+        System.out.println("Error" + e);
+ 
+  }    
+}                                            
+
+private void tbl_productMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
+        int index=tbl_product.getSelectedRow();
+        txt_item.setText(dl.getValueAt(index,1).toString());
+        txt_price.setText(dl.getValueAt(index,2).toString());
+        txt_quantity.setText(dl.getValueAt(index,3).toString());
+ }
+    
+public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new products().setVisible(true);
+            }
+        });
+}
