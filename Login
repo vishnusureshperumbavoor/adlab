@@ -5,15 +5,12 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) { 
         String username = txt_username.getText();
-        System.out.println(username);
         String password = txt_password.getText();
-        System.out.println(password);
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
             String sql="select * from tbl_registration where username='"+username+"' && password='"+password+"'";
-            System.out.println(sql);
             Statement stmt=con.createStatement();
             ResultSet rs= stmt.executeQuery(sql);
             
