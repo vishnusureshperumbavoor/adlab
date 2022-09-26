@@ -44,8 +44,8 @@ private void addbuttonActionPerformed(java.awt.event.ActionEvent evt) {
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
             String sql="insert into tbl_products(item,price,quantity)values('"+item+"','"+price+"','"+quantity+"')";
             Statement stmt=con.createStatement();
-            int rs= stmt.executeUpdate(sql);
-            if (rs==1)
+            rs= stmt.executeUpdate(sql);
+            if (rs.next())
             {
                fetch();
             }
@@ -71,8 +71,8 @@ private void updatebuttonActionPerformed(java.awt.event.ActionEvent evt) {
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
             String sql="update tbl_products set item='"+item+"',price='"+price+"',quantity='"+quantity+"' where id='"+id+"'";
             Statement stmt=con.createStatement();
-            int rs= stmt.executeUpdate(sql);
-            if(rs==1)
+            rs= stmt.executeUpdate(sql);
+            if(rs.next())
             {
                 fetch();
             }
@@ -98,8 +98,8 @@ private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
             String sql="delete from tbl_products where id='"+id+"'";
             Statement stmt=con.createStatement();
-            int rs= stmt.executeUpdate(sql);
-            if (rs==1)
+            rs= stmt.executeUpdate(sql);
+            if (rs.next())
             {
                fetch();
             }
