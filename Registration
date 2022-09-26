@@ -6,18 +6,13 @@ public class Registration extends javax.swing.JFrame {
 
 private void submitActionPerformed(java.awt.event.ActionEvent evt) {      
         String username = txt_username.getText();
-        System.out.println(username);
         String password = txt_password.getText();
-        System.out.println(password);
         String Email = txt_email.getText();
-        System.out.println(Email); 
-        
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
             String sql="insert into tbl_registration(userName,password,email)values('"+username+"','"+password+"','"+Email+"')";
-            System.out.println(sql);
             Statement stmt=con.createStatement();
             int rs= stmt.executeUpdate(sql);
             
