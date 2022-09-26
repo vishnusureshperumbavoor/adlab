@@ -15,15 +15,15 @@ public void fetch()
             String sql="select * from tbl_products";
             Statement stmt=con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
-            dl.setRowCount(0);
+            DefaultTableModel dtm=(DefaultTableModel)tbl_product.getModel();
+            dtm.setRowCount(0);
             while(rs.next())
             {
-                Vector v2=new Vector();
-                v2.add(rs.getString("id"));
-                v2.add(rs.getString("item"));
-                v2.add(rs.getString("price"));
-                dl.addRow(v2);
+                Vector vctr =new Vector();
+                vctr.add(rs.getString("id"));
+                vctr.add(rs.getString("item"));
+                vctr.add(rs.getString("price"));
+                dtm.addRow(vctr);
             }
 }
             catch(Exception e)
@@ -37,12 +37,11 @@ public void fetch()
 private void addbuttonActionPerformed(java.awt.event.ActionEvent evt) {                                          
          String item = txt_item.getText();
         String price = txt_price.getText();
-        String quantity = txt_quantity.getText();
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
-            String sql="insert into tbl_products(item,price,quantity)values('"+item+"','"+price+"','"+quantity+"')";
+            String sql="insert into tbl_products(item,price,quantity)values('"+item+"','"+price+"')";
             Statement stmt=con.createStatement();
             rs= stmt.executeUpdate(sql);
             if (rs.next())
@@ -64,12 +63,11 @@ private void updatebuttonActionPerformed(java.awt.event.ActionEvent evt) {
         int id=Integer.parseInt(dl.getValueAt(index,0).toString());
         String item= txt_item.getText();
         String price = txt_price.getText();
-        String quantity = txt_quantity.getText();
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_farm","root","");
-            String sql="update tbl_products set item='"+item+"',price='"+price+"',quantity='"+quantity+"' where id='"+id+"'";
+            String sql="update tbl_products set item='"+item+"',price='"+price+"' where id='"+id+"'";
             Statement stmt=con.createStatement();
             rs= stmt.executeUpdate(sql);
             if(rs.next())
@@ -89,9 +87,6 @@ private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel dl=(DefaultTableModel)tbl_product.getModel();
         int index=tbl_product.getSelectedRow();
         int id=Integer.parseInt(dl.getValueAt(index,0).toString());
-        String item = txt_item.getText();
-        String price = txt_price.getText();
-        String quantity = txt_quantity.getText();
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -116,5 +111,4 @@ private void tbl_productMouseClicked(java.awt.event.MouseEvent evt) {
         int index=tbl_product.getSelectedRow();
         txt_item.setText(dl.getValueAt(index,1).toString());
         txt_price.setText(dl.getValueAt(index,2).toString());
-        txt_quantity.setText(dl.getValueAt(index,3).toString());
  }
