@@ -47,9 +47,7 @@ private void addbuttonActionPerformed(java.awt.event.ActionEvent evt) {
             int rs= stmt.executeUpdate(sql);
             if (rs==1)
             {
-                JOptionPane.showMessageDialog(null,"Added successfully");
                fetch();
-               clear();
             }
         }
             catch(Exception e)
@@ -76,9 +74,7 @@ private void updatebuttonActionPerformed(java.awt.event.ActionEvent evt) {
             int rs= stmt.executeUpdate(sql);
             if(rs==1)
             {
-                JOptionPane.showMessageDialog(this," SUCCESSFULLY Updated");
                 fetch();
-                clear();
             }
         }
             catch(Exception e)
@@ -105,9 +101,7 @@ private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {
             int rs= stmt.executeUpdate(sql);
             if (rs==1)
             {
-                JOptionPane.showMessageDialog(null,"deleted sussesfully");
                fetch();
-               clear();
             }
         }
             catch(Exception e)
